@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        form {
+            margin: 20px 0;
+        }
+        form div {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            border: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Usuarios, Grupos y Acciones</h1>
+        <form id="userForm">
+            <div>
+                <label for="userName">Nombre del Usuario</label>
+                <input type="text" id="userName" name="userName" required>
+            </div>
+            <div>
+                <label for="groupName">Nombre del Grupo</label>
+                <input type="text" id="groupName" name="groupName" required>
+            </div>
+            <div>
+                <label for="actionName">Nombre de la Acción</label>
+                <input type="text" id="actionName" name="actionName" required>
+            </div>
+            <input type="submit" value="Agregar">
+        </form>
+        <h2>Usuarios</h2>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Grupo</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los datos se cargarán aquí -->
+            </tbody>
+        </table>
+        <h1>Eliminar Usuario</h1>
+        <form action="eliminar_usuario.php" method="post">
+            <label for="usuario_id">ID del Usuario a Eliminar:</label>
+            <input type="text" id="usuario_id" name="usuario_id">
+            <button type="submit">Eliminar Usuario</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch('add_user.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                loadUsers();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        function loadUsers() {
+            fetch('get_users.php')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#userTable tbody');
+                tableBody.innerHTML = '';
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.name}</td>
+                        <td>${row.group}</td>
+                        <td>${row.action}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Cargar los usuarios cuando se carga la página
+        document.addEventListener('DOMContentLoaded', loadUsers);
+    </script>
+</body>
+</html>
