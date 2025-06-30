@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>U1-2 - Menú de usuario</title>
+</head>
+<body>
+  <h1>Ejercicio 2 - Menú de acciones</h1>
+
+  <script>
+    
+    const USUARIO_CORRECTO = "cliente1";
+    let contraseña = "1234";  
+
+    let intentosMaximos = 3;
+
+    
+    function iniciarSesion() {
+      let intentos = 0;
+      while (intentos < intentosMaximos) {
+        const usuarioIngresado = prompt("Ingrese su usuario:").trim();
+        const contraseñaIngresada = prompt("Ingrese su contraseña:").trim();
+
+        if (usuarioIngresado === USUARIO_CORRECTO && contraseñaIngresada === contraseña) {
+          alert(`¡Bienvenido/a ${usuarioIngresado}!`);
+          mostrarMenu();
+          return;
+        } else {
+          intentos++;
+          if (intentos === intentosMaximos) {
+            alert("Usuario bloqueado. Contacte al administrador.");
+            return;
+          } else {
+            alert("Usuario y/o contraseña incorrecta");
+          }
+        }
+      }
+    }
+
+    // Función para mostrar el menú de acciones
+    function mostrarMenu() {
+      let opcion;
+      do {
+        opcion = prompt("Menú de acciones:\n1. Cambiar contraseña\nX. Salir").trim().toUpperCase();
+
+        if (opcion === "1") {
+          const nuevaContraseña = prompt("Ingrese su nueva contraseña:").trim();
+          if (nuevaContraseña.length > 0) {
+            contraseña = nuevaContraseña;
+            alert("Contraseña cambiada con éxito.");
+          } else {
+            alert("La contraseña no puede estar vacía.");
+          }
+        } else if (opcion !== "X") {
+          alert("Opción no válida.");
+        }
+
+      } while (opcion !== "X");
+
+      iniciarSesion();
+    }
+
+    
+    iniciarSesion();
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>U1-1 - Login sistema de pedidos</title>
+</head>
+<body>
+  <h1>Ejercicio 1 - Login</h1>
+
+  <script>
+    const USUARIO_CORRECTO = "cliente1";
+    const CONTRASEÑA_CORRECTA = "1234";
+
+    let intentos = 0;
+    let accesoConcedido = false;
+
+    while (intentos < 3 && !accesoConcedido) {
+      const usuarioIngresado = prompt("Ingrese su usuario:").trim();
+      const contraseñaIngresada = prompt("Ingrese su contraseña:").trim();
+
+    if (usuarioIngresado === USUARIO_CORRECTO && contraseñaIngresada === CONTRASEÑA_CORRECTA) {
+    alert(`¡Bienvenido/a ${usuarioIngresado}!`);
+    console.log(`¡Bienvenido/a ${usuarioIngresado}!`);
+    accesoConcedido = true;
+    } else {
+    intentos++;
+    if (intentos === 3) {
+        alert("Usuario bloqueado. Contacte al administrador");
+        console.log("Usuario bloqueado. Contacte al administrador");
+    } else {
+        alert("Usuario y/o contraseña incorrecta");
+        console.log("Usuario y/o contraseña incorrecta");
+    }
+    }
+
+    }
+  </script>
+</body>
+</html>
+
