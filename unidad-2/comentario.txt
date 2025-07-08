@@ -1,0 +1,5 @@
+Comparación entre localStorage y sessionStorage:
+
+- localStorage mantiene los datos guardados incluso después de cerrar y volver a abrir el navegador.
+- sessionStorage borra todos los datos cuando se cierra la pestaña.
+- Ambos permiten guardar estructuras como arrays y objetos.
