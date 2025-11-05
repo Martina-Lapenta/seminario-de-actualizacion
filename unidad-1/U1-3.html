@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>U1-3 - Validación de contraseña segura</title>
+</head>
+<body>
+  <h1>Ejercicio 3 - Validación de contraseña</h1>
+
+  <script>
+    const USUARIO_CORRECTO = "cliente1";
+    let contraseña = "1234";
+
+    function iniciarSesion() {
+      let intentos = 0;
+      while (intentos < 3) {
+        const usuarioIngresado = prompt("Ingrese su usuario:").trim();
+        const contraseñaIngresada = prompt("Ingrese su contraseña:").trim();
+
+        if (usuarioIngresado === USUARIO_CORRECTO && contraseñaIngresada === contraseña) {
+          alert(`¡Bienvenido/a ${usuarioIngresado}!`);
+          mostrarMenu();
+          return;
+        } else {
+          intentos++;
+          if (intentos === 3) {
+            alert("Usuario bloqueado. Contacte al administrador.");
+            return;
+          } else {
+            alert("Usuario y/o contraseña incorrecta");
+          }
+        }
+      }
+    }
+
+    function mostrarMenu() {
+      let opcion;
+      do {
+        opcion = prompt("Menú de acciones:\n1. Cambiar contraseña\nX. Salir").trim().toUpperCase();
+
+        if (opcion === "1") {
+          cambiarContraseña();
+        } else if (opcion !== "X") {
+          alert("Opción no válida.");
+        }
+
+      } while (opcion !== "X");
+
+      iniciarSesion(); // volver al login
+    }
+
+    function cambiarContraseña() {
+      const nueva = prompt("Ingrese su nueva contraseña:").trim();
+
+      if (validarContraseña(nueva)) {
+        contraseña = nueva;
+        alert("Contraseña cambiada con éxito.");
+      } else {
+        alert("La contraseña no cumple con los requisitos de seguridad:\n- 8 a 16 caracteres\n- Al menos 1 mayúscula\n- Al menos 2 símbolos especiales");
+      }
+    }
+
+    function validarContraseña(pass) {
+      if (pass.length < 8 || pass.length > 16) return false;
+
+      const tieneMayuscula = /[A-Z]/.test(pass);
+      const simbolosEspeciales = pass.match(/[^A-Za-z0-9]/g); // busca los símbolos
+
+      return tieneMayuscula && simbolosEspeciales && simbolosEspeciales.length >= 2;
+    }
+
+    // Iniciar sistema
+    iniciarSesion();
+  </script>
+</body>
+</html>
