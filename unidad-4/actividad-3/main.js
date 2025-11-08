@@ -1,0 +1,1 @@
+import './WCComponents/WCTablePosts.js';
